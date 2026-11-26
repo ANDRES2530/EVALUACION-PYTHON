@@ -1,0 +1,23 @@
+import os
+from flask import Flask, jsonify
+from pymongo import MongoClient
+from dotenv import load_dotenv
+
+load_dotenv()
+
+app = Flask(__name__)
+
+MONGO_URI = os.getenv("MONGO_URI")
+client = MongoClient(MONGO_URI)
+
+db=client["CURSOS_CTPI_2026-ANDRES"]
+aprendices=db["APRENDICES_MONTANO"]
+
+@app.route('/api/cantidadAprendices',methods=['GET'])
+def cantidad_aprendices():
+    cantidad=aprendices.count_documents({})
+    return jsonify({"CantidadAprendices":cantidad})
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port=8000)
