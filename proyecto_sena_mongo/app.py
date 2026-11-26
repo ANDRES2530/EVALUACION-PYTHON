@@ -13,10 +13,16 @@ client = MongoClient(MONGO_URI)
 db=client["CURSOS_CTPI_2026-ANDRES"]
 aprendices=db["APRENDICES_MONTANO"]
 
-@app.route('/api/cantidadAprendices',methods=['GET'])
+@app.route('/api/cantidadAprendices')
 def cantidad_aprendices():
     cantidad=aprendices.count_documents({})
     return jsonify({"CantidadAprendices":cantidad})
+
+@app.route("/api/cantidadAprendices/<nivel>")
+def cantidadPorNivel(nivel):
+    cantidad = aprendices.count_documents({"NIVEL_DE_FORMACION": nivel})
+    return jsonify({"CantidadAprendices": cantidad, "Nivel de formación": nivel})
+
 
 
 if __name__ == '__main__':
