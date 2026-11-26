@@ -73,5 +73,26 @@ def aprendices_por_certificar(ficha, cantidad):
     )
     return jsonify({"Cantidad de Aprendices por Certificar": resultado})
 
+#10.6
+@app.route('/api/terminadaUnificacion/<programa>')
+def terminada_unificacion(programa):
+    filtro = {
+        "PROGRAMA": programa,
+        "ESTADO_FICHA": "Terminada por unificación"
+    }
+    proyeccion = {
+        "_id": 0,
+        "FICHA": 1,
+        "IDENTIFICACION": 1,
+        "NOMBRE": 1,
+        "PRIMER_APELLIDO": 1,
+        "SEGUNDO_APELLIDO": 1
+    }
+    resultado = list(aprendices.find(filtro, proyeccion))
+    return jsonify({
+        "Programa": programa,
+        "Aprendices": resultado
+    })
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
