@@ -94,5 +94,20 @@ def terminada_unificacion(programa):
         "Aprendices": resultado
     })
 
+#10.7
+@app.route('/api/aprendicesPowerBI')
+def aprendices_power_bi():
+    filtro = {"PROGRAMA": "VISUALIZACION DE DATOS USANDO POWER BI"}
+    proyeccion = {
+        "_id": 0,
+        "PROGRAMA": 1,
+        "FICHA": 1,
+        "NOMBRE": 1,
+        "PRIMER_APELLIDO": 1,
+        "SEGUNDO_APELLIDO": 1
+    }
+    resultado = list(aprendices.find(filtro, proyeccion))
+    return jsonify({"Aprendices": resultado})
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
