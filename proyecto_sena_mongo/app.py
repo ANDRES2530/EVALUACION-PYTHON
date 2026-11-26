@@ -122,5 +122,27 @@ def certificados_power_bi():
         "CantidadCertificados": cantidad
     })
 
+#10.9
+@app.route('/api/porEstado/<int:ficha>/<estado>')
+def aprendices_por_estado_ficha(ficha, estado):
+    filtro = {
+        "FICHA": ficha,
+        "ESTADO_APRENDIZ": estado
+    }
+    proyeccion = {
+        "_id": 0,
+        "FICHA": 1,
+        "NOMBRE": 1,
+        "PRIMER_APELLIDO": 1,
+        "PROGRAMA": 1,
+        "SEGUNDO_APELLIDO": 1
+    }
+    resultado = list(aprendices.find(filtro, proyeccion))
+    return jsonify({
+        "Aprendices": resultado,
+        "Estado de los Aprendices": estado,
+        "Ficha": str(ficha)
+    })
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
