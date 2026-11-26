@@ -30,6 +30,24 @@ def programasPorNivel(nivel):
     programas = aprendices.distinct("PROGRAMA", {"NIVEL_DE_FORMACION": nivel})
     return jsonify({"nivel de formación": nivel, "programas": programas})
 
+@app.route('/api/certificados/<programa>')
+def aprendices_certificados(programa):
+    filtro = {
+        "PROGRAMA": programa,
+        "ESTADO_APRENDIZ": "Certificado"
+    }
+    proyeccion = {
+        "_id": 0,
+        "FICHA": 1,
+        "NOMBRE": 1,
+        "PRIMER_APELLIDO": 1,
+        "SEGUNDO_APELLIDO": 1
+    }
+    resultado = list(aprendices.find(filtro, proyeccion))
+    return jsonify({
+        "Aprendices_Certificados": resultado,
+        "Programa": programa
+    })
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
