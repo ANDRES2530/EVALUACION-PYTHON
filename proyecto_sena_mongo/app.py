@@ -144,5 +144,14 @@ def aprendices_por_estado_ficha(ficha, estado):
         "Ficha": str(ficha)
     })
 
+@app.route('/api/programasComplementariaVirtual')
+def programas_complementaria():
+    programas = aprendices.distinct("PROGRAMA", {"NIVEL_FORMACION": "COMPLEMENTARIA VIRTUAL"})
+    programas.sort()
+    return jsonify({
+        "nivel de formación": "COMPLEMENTARIA VIRTUAL",
+        "programas": programas
+    })
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
